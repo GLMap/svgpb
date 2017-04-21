@@ -6,8 +6,12 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#include "SVGRender.h"
 #include <list>
+
+#include "SVGRender.h"
+#include "PBFileStream.h"
+
+using namespace std;
 
 SVGRender::SVGRender()
 {
@@ -45,7 +49,7 @@ set<int> SVGRender::statesFromName(const string &name)
         char *nextNumber = 0;
         while (*str!=0)
         {
-            long state = strtol(str, &nextNumber, 10);
+            int state = (int)strtol(str, &nextNumber, 10);
             if(nextNumber==str) break;
             if(nextNumber==0) break;             
             rv.insert(state);

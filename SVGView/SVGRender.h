@@ -11,11 +11,9 @@
 
 #include <map>
 #include <set>
-#include <vector>
-using namespace std;
+#include <string>
 
 #import "svg.pb.h"
-#import "PBFileStream.h"
 
 /*! Block used for enumerating objects
  *  @param object - next object in enumeration
@@ -34,10 +32,10 @@ private:
     };
     
     ProtoSVGRoot _root;
-    map<const ProtoSVGElementPath*, CGPathRef>              _pathMap;
-    map<const ProtoSVGElementGradient*, CGGradientRef>      _gradientMap;
-    set<int>                                                _activeStates;
-    set<int>                                                _allStates;
+    std::map<const ProtoSVGElementPath*, CGPathRef>              _pathMap;
+    std::map<const ProtoSVGElementGradient*, CGGradientRef>      _gradientMap;
+    std::set<int>                                                _activeStates;
+    std::set<int>                                                _allStates;
     
     CGColorSpaceRef _colorSpace;
 
@@ -48,7 +46,7 @@ private:
     CGPathRef getCGPathForPath(const ProtoSVGElementPath *path);
     CGGradientRef buildCGGradient(const ProtoSVGElementGradient *gradient);
     CGGradientRef getCGGradientForGradient(const ProtoSVGElementGradient *gradient);
-    const ProtoSVGElement *findElementById(const string &name);
+    const ProtoSVGElement *findElementById(const std::string &name);
     void drawPath(CGContextRef context,const ProtoSVGElementPath *pathObject, RenderContext &rc);
     
     
@@ -59,7 +57,7 @@ private:
     bool renderElements(SVGRenderEnumBlock renderEnterBlock, SVGRenderEnumBlock renderExitBlock, const ProtoSVGElement *object, bool onlyActive);
     void renderElements(SVGRenderEnumBlock renderEnterBlock, SVGRenderEnumBlock renderExitBlock, bool onlyActive=true);
 
-    static set<int> statesFromName(const string &name);
+    static std::set<int> statesFromName(const std::string &name);
 public:
     SVGRender();
     ~SVGRender();
@@ -105,7 +103,7 @@ public:
      */
     bool isPointInside(CGPoint point, CGSize size);
     
-    set<int>  statesAtPoint(CGPoint point, CGSize size, bool activeOnly=true);
+    std::set<int>  statesAtPoint(CGPoint point, CGSize size, bool activeOnly=true);
 
     CGRect getRect();
 };

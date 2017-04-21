@@ -7,7 +7,6 @@
 //
 
 #include "svg.pb.h"
-#include "PBFileStream.h"
 #include "TBXML.h"
 #include "SVGRoot.h"
 #include "SVGPath.h"

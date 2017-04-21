@@ -3,7 +3,7 @@
 //  Ringtone
 //
 //  Created by destman on 8/10/11.
-//  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2014 Evgen Bodunov. All rights reserved.
 //
 
 #ifndef PBFileStream_h

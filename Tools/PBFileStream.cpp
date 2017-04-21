@@ -3,7 +3,7 @@
 //  Ringtone
 //
 //  Created by destman on 8/10/11.
-//  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2014 Evgen Bodunov. All rights reserved.
 //
 
 #include <unistd.h>
@@ -46,10 +46,10 @@ bool PBFileInputStream::open(const char *fileName)
 
 bool    PBFileInputStream::Next(const void** data, int* size)
 {
-    int rv = ::read(_fd, _buff, sizeof(_buff));
+    ssize_t rv = ::read(_fd, _buff, sizeof(_buff));
     if(rv>0)
     {
-        *size = rv;
+        *size = (int)rv;
         *data = _buff;
         return true;
     }
@@ -112,7 +112,7 @@ bool    PBFileOutputStream::Next(void** data, int* size)
     
     if(_haveData)
     {
-        int rv = ::write(_fd, _buff, sizeof(_buff));
+        ssize_t rv = ::write(_fd, _buff, sizeof(_buff));
         if(rv!=sizeof(_buff))
         {
             return false;
@@ -132,7 +132,7 @@ void    PBFileOutputStream::BackUp(int count)
     if(_fd<0)
         return;
     int bytesToWrite = sizeof(_buff)-count;
-    int rv = write(_fd, _buff, bytesToWrite);
+    ssize_t rv = write(_fd, _buff, bytesToWrite);
     if(rv!=bytesToWrite)
     {
         return;
