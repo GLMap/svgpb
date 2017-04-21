@@ -10,6 +10,7 @@
 #include "TBXML.h"
 #include "SVGRoot.h"
 #include "SVGPath.h"
+#include "PBFileStream.h"
 
 void printPathPoints(int level,const ProtoSVGElementPath *path)
 {
