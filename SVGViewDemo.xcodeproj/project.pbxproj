@@ -514,12 +514,9 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SVGViewDemo/SVGViewDemo-Prefix.pch";
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../libs/build/$(arch)/include";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/libs/build/$(arch)/include";
 				INFOPLIST_FILE = "SVGViewDemo/SVGViewDemo-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(SRCROOT)/../libs/build/$(arch)/lib",
-					"$(PROJECT_DIR)/libs/build/armv7/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/libs/build/$(arch)/lib";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;
@@ -535,12 +532,9 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SVGViewDemo/SVGViewDemo-Prefix.pch";
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../libs/build/$(arch)/include";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/libs/build/$(arch)/include";
 				INFOPLIST_FILE = "SVGViewDemo/SVGViewDemo-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(SRCROOT)/../libs/build/$(arch)/lib",
-					"$(PROJECT_DIR)/libs/build/armv7/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/libs/build/$(arch)/lib";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
