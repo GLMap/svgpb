@@ -10,15 +10,6 @@
 #import "SVGGeneralParams.h"
 #import "SVGParseTools.h"
 
-int nPathElements;
-int nPathPoints_Move;
-int nPathPoints_Line;
-int nPathPoints_HLine;
-int nPathPoints_VLine;
-int nPathPoints_Curve;
-int nPathPoints_ShortCurve;
-int nPathPoints_ColosePath;
-
 
 static bool parsePathString(ProtoSVGElementPath *path,const char *data)
 {
@@ -61,8 +52,6 @@ static bool parsePathString(ProtoSVGElementPath *path,const char *data)
                 point->mutable_move_to()->set_x(curX);
                 point->mutable_move_to()->set_y(curY);
                 prevCommandIsCurve = NO;
-                
-                ++nPathPoints_Move;
                 break;
             }
             case 'l':
@@ -91,9 +80,7 @@ static bool parsePathString(ProtoSVGElementPath *path,const char *data)
                 point->mutable_line_to()->set_x(curX);
                 point->mutable_line_to()->set_y(curY);
                 prevCommandIsCurve = NO;
-                
-                ++nPathPoints_Line;
-                break;                
+                break;
             }
             case 'h':
                 isAbsolute = false;
@@ -117,8 +104,6 @@ static bool parsePathString(ProtoSVGElementPath *path,const char *data)
                 point->mutable_line_to()->set_x(curX);
                 point->mutable_line_to()->set_y(curY);
                 prevCommandIsCurve = NO;
-
-                ++nPathPoints_HLine;
                 break;
             }                
             case 'v':
@@ -138,17 +123,10 @@ static bool parsePathString(ProtoSVGElementPath *path,const char *data)
                 {
                     curY += vals[0];
                 }
-                ProtoSVGElementPath_PathPoint *point = nil;
-                if(point==nil)
-                {
-                    point=path->add_points(); 
-                } 
-                
+                ProtoSVGElementPath_PathPoint *point = path->add_points();
                 point->mutable_line_to()->set_x(curX);
                 point->mutable_line_to()->set_y(curY);
                 prevCommandIsCurve = NO;
-                
-                ++nPathPoints_VLine;
                 break;
             }
             case 'c':
@@ -174,7 +152,6 @@ static bool parsePathString(ProtoSVGElementPath *path,const char *data)
                 curY = vals[5];
                 
                 ProtoSVGElementPath_PathPoint *point = path->add_points();
-                
                 point->mutable_curve_to()->set_cp1x(vals[0]);
                 point->mutable_curve_to()->set_cp1y(vals[1]);
                 point->mutable_curve_to()->set_cp2x(vals[2]);
@@ -185,8 +162,6 @@ static bool parsePathString(ProtoSVGElementPath *path,const char *data)
                 prevCurveCDX = vals[2]-curX;
                 prevCurveCDY = vals[3]-curY;
                 prevCommandIsCurve = YES;
-                
-                ++nPathPoints_Curve;
                 break;
             }
             case 's':
@@ -215,12 +190,7 @@ static bool parsePathString(ProtoSVGElementPath *path,const char *data)
                     prevCurveCDY = vals[3]-vals[1];
                 }
                 
-                ProtoSVGElementPath_PathPoint *point = nil;
-                if(point==nil)
-                {
-                    point=path->add_points(); 
-                } 
-                
+                ProtoSVGElementPath_PathPoint *point = path->add_points();
                 point->mutable_curve_to()->set_cp1x(curX-prevCurveCDX);
                 point->mutable_curve_to()->set_cp1y(curY-prevCurveCDY);
                 point->mutable_curve_to()->set_cp2x(vals[0]);
@@ -233,8 +203,6 @@ static bool parsePathString(ProtoSVGElementPath *path,const char *data)
                 prevCurveCDX = vals[0]-curX;
                 prevCurveCDY = vals[1]-curY;
                 prevCommandIsCurve = YES;                
-                
-                ++nPathPoints_ShortCurve;
                 break;
             }
             
@@ -242,14 +210,39 @@ static bool parsePathString(ProtoSVGElementPath *path,const char *data)
             case 'z':
             {
                 ++data;
-                ProtoSVGElementPath_PathPoint *point = nil;
-                if(point==nil)
-                {
-                    point=path->add_points(); 
-                }                 
+                ProtoSVGElementPath_PathPoint *point = path->add_points();
                 point->set_close_path(true);
                 prevCommandIsCurve = NO;
-                ++nPathPoints_ColosePath;
+                break;
+            }
+                
+            case 'a':
+                isAbsolute = false;
+            case 'A': //ARCS not supported
+            {
+                ++data;
+                double vals[7];
+                if(!parseNumbers(data, 7, vals, &data))
+                {
+                    dbgLog(@"Error in SVG: expected 7 params: %s",data);
+                    return NO;
+                }
+                
+                if(isAbsolute)
+                {
+                    curX  = vals[5];
+                    curY  = vals[6];
+                }else
+                {
+                    curX += vals[5];
+                    curY += vals[6];
+                }
+                
+                ProtoSVGElementPath_PathPoint *point = path->add_points();
+                point->mutable_move_to()->set_x(curX);
+                point->mutable_move_to()->set_y(curY);
+                prevCommandIsCurve = NO;
+                dbgLog(@"ARCS not supported");
                 break;
             }
             default:
@@ -379,7 +372,7 @@ bool SVGPath_ParseRectFromXML(ProtoSVGElementPath *path,TBXMLElement *element)
 }
 
 
-bool parsePolygonPoints(ProtoSVGElementPath *path,const char *data,bool closePath)
+static bool parsePolygonPoints(ProtoSVGElementPath *path,const char *data,bool closePath)
 {
     double point[2];
     while (parseNumbersFromRow(data, 2, point, &data)) 
@@ -399,8 +392,9 @@ bool parsePolygonPoints(ProtoSVGElementPath *path,const char *data,bool closePat
     {
         ProtoSVGElementPath_PathPoint *nextPoint = path->add_points();
         nextPoint->set_close_path(true);
+        return path->points_size()>=3;
     }
-    return path->points_size()>=3;
+    return path->points_size()>=2;
 }
 
 bool SVGPath_ParseLineFromXML(ProtoSVGElementPath *path,TBXMLElement *element)
@@ -464,8 +458,6 @@ bool SVGPath_ParseLineFromXML(ProtoSVGElementPath *path,TBXMLElement *element)
         pt = path->add_points();
         pt->mutable_line_to()->set_x(x2);
         pt->mutable_line_to()->set_y(y2);
-        
-        ++nPathPoints_Line;
     }
     
     return success;

@@ -19,7 +19,8 @@ PREFIX = ${WORKDIR}/build/${ARCH}
 LIBDIR = ${PREFIX}/lib
 INCLUDEDIR = ${PREFIX}/include
 
-PROTOBUF_VER = 3.2.0
+PROTOBUF_VER = 3.4.0
+PROTOBUF_DIR = ${WORKDIR}/download/protobuf-${PROTOBUF_VER}
 
 CXX = ${XCODE_TOOLCHAIN}/usr/bin/clang++
 CC = ${XCODE_TOOLCHAIN}/usr/bin/clang
@@ -51,19 +52,20 @@ status:
 	brew install protobuf
 
 # install protobuf from brew before building
-${LIBDIR}/libprotobuf.a: /usr/local/bin/protoc ${WORKDIR}/protobuf
+${LIBDIR}/libprotobuf.a: /usr/local/bin/protoc ${PROTOBUF_DIR}
 	@printf $(call NICE_PRINT,$@) 1>&2;
-	cd libs/protobuf && env CXX=${CXX} CC=${CC} CFLAGS="${CFLAGS}" CXXFLAGS="${CXXFLAGS}" LDFLAGS="${LDFLAGS}" \
+	cd ${PROTOBUF_DIR} && env CXX=${CXX} CC=${CC} CFLAGS="${CFLAGS}" CXXFLAGS="${CXXFLAGS}" LDFLAGS="${LDFLAGS}" \
 	./configure --host=arm-apple-darwin --disable-shared --with-protoc=/usr/local/bin/protoc --prefix=${PREFIX} && \
 	${MAKE} clean install
 
 # Download protobuf
-${WORKDIR}/protobuf:
-	mkdir ${WORKDIR}
-	
+${PROTOBUF_DIR}:
+	mkdir -p ${WORKDIR}/download
 	wget https://github.com/google/protobuf/releases/download/v${PROTOBUF_VER}/protobuf-cpp-${PROTOBUF_VER}.tar.gz
 	tar xzvf protobuf-cpp-${PROTOBUF_VER}.tar.gz
 	rm protobuf-cpp-${PROTOBUF_VER}.tar.gz
-	mv protobuf-${PROTOBUF_VER} ${WORKDIR}/protobuf
-	touch ${WORKDIR}/protobuf
-	cd ${WORKDIR}/protobuf && ./autogen.sh
+	mv protobuf-${PROTOBUF_VER} ${PROTOBUF_DIR}
+	cd ${PROTOBUF_DIR} && ./autogen.sh
+
+clean:
+	rm -rf libs
