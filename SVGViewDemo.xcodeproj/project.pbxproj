@@ -91,7 +91,6 @@
 		6C3FD3961F4D79AD007320EE /* test.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = test.svg; sourceTree = "<group>"; };
 		6C3FD3A01F4D827C007320EE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		6CA3DEEB1B5FA99D0017150C /* libprotobuf-lite.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libprotobuf-lite.a"; path = "/usr/local/lib/libprotobuf-lite.a"; sourceTree = "<absolute>"; };
-		87A1248F4D155754549CD7B0 /* Pods-SVGViewTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SVGViewTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-SVGViewTest/Pods-SVGViewTest.release.xcconfig"; sourceTree = "<group>"; };
 		C14D5593153D5C6B00E37F56 /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
 		C14D5594153D5C6B00E37F56 /* Logger.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Logger.mm; sourceTree = "<group>"; };
 		C14D55BA153D608E00E37F56 /* PBFileStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PBFileStream.cpp; sourceTree = "<group>"; };
@@ -127,7 +126,6 @@
 		C1F72763141F6E8000CE8C94 /* SVGPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVGPath.h; sourceTree = "<group>"; };
 		C1F72764141F6E8000CE8C94 /* SVGPath.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SVGPath.mm; sourceTree = "<group>"; };
 		C1F7276D141F6ECF00CE8C94 /* svg2pb-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "svg2pb-Prefix.pch"; sourceTree = "<group>"; };
-		D6E855667CF226EAF6FDAFCC /* Pods-SVGViewTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SVGViewTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SVGViewTest/Pods-SVGViewTest.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,15 +163,6 @@
 				6C3FD3961F4D79AD007320EE /* test.svg */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		A25E0402DD92D8CAAA4C5CA7 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				D6E855667CF226EAF6FDAFCC /* Pods-SVGViewTest.debug.xcconfig */,
-				87A1248F4D155754549CD7B0 /* Pods-SVGViewTest.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		C14D5592153D5C6B00E37F56 /* Tools */ = {
@@ -230,7 +219,6 @@
 				C1D0665014D81FCA00802591 /* SVGViewDemo */,
 				C1BB056113FBD3760063B1D1 /* Frameworks */,
 				C1BB055F13FBD3760063B1D1 /* Products */,
-				A25E0402DD92D8CAAA4C5CA7 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -508,7 +496,6 @@
 		};
 		C1D0665D14D81FCA00802591 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D6E855667CF226EAF6FDAFCC /* Pods-SVGViewTest.debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -526,7 +513,6 @@
 		};
 		C1D0665E14D81FCA00802591 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 87A1248F4D155754549CD7B0 /* Pods-SVGViewTest.release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
