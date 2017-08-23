@@ -13,12 +13,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    _window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    /*_window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
     UINavigationController *vc = [[UINavigationController alloc] initWithRootViewController:[[TestViewController alloc] initWithNibName:nil bundle:nil]];
     _window.rootViewController = vc;
     [vc setNavigationBarHidden:YES];
-    [_window makeKeyAndVisible];
+    [_window makeKeyAndVisible];*/
     return YES;
 }
 

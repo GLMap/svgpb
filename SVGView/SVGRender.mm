@@ -440,7 +440,7 @@ struct SVGRenderPrivate
                     CGContextRestoreGState(context);
                 }else
                 {
-                    dbgLog(@"Unsupported stroke draw mode");
+                    //dbgLog(@"Unsupported stroke draw mode");
                 }
             }
             if(needRestore)

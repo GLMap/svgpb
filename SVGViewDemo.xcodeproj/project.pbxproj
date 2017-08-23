@@ -16,6 +16,7 @@
 		6C3FD39D1F4D79AD007320EE /* test.svg in Resources */ = {isa = PBXBuildFile; fileRef = 6C3FD3961F4D79AD007320EE /* test.svg */; };
 		6C3FD3A11F4D827C007320EE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C3FD3A01F4D827C007320EE /* UIKit.framework */; };
 		6CA3DEEC1B5FA99D0017150C /* libprotobuf-lite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CA3DEEB1B5FA99D0017150C /* libprotobuf-lite.a */; };
+		C1497DF91F4DBB3B008F1176 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6C3FD38C1F4D7988007320EE /* Main.storyboard */; };
 		C14D5595153D5C6B00E37F56 /* Logger.mm in Sources */ = {isa = PBXBuildFile; fileRef = C14D5594153D5C6B00E37F56 /* Logger.mm */; };
 		C14D5596153D5C6B00E37F56 /* Logger.mm in Sources */ = {isa = PBXBuildFile; fileRef = C14D5594153D5C6B00E37F56 /* Logger.mm */; };
 		C14D5597153D5DD100E37F56 /* SVGView.mm in Sources */ = {isa = PBXBuildFile; fileRef = C15330E413FBD41F000CECC0 /* SVGView.mm */; };
@@ -355,6 +356,7 @@
 				6C3FD3991F4D79AD007320EE /* arrow_gray.svg in Resources */,
 				6C3FD39A1F4D79AD007320EE /* btn_test.svg in Resources */,
 				6C3FD39C1F4D79AD007320EE /* main_bg.svg in Resources */,
+				C1497DF91F4DBB3B008F1176 /* Main.storyboard in Resources */,
 				6C3FD39D1F4D79AD007320EE /* test.svg in Resources */,
 				6C3FD3981F4D79AD007320EE /* arrow.svg in Resources */,
 				6C3FD3971F4D79AD007320EE /* 1.svg in Resources */,
