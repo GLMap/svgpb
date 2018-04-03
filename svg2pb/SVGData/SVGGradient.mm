@@ -15,7 +15,7 @@ static bool parseStyleString(const char *str, ProtoSVGElementGradient_GradientSt
 {
     while (str) 
     {
-        char *nextPart = strstr(str, ";");
+        const char *nextPart = strstr(str, ";");
         
         char *curPart = nil;
         int curLen;
