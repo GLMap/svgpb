@@ -12,6 +12,10 @@
 #include "SVGPath.h"
 #include "PBFileStream.h"
 
+#include <time.h>
+#include <utime.h>
+#include <sys/stat.h>
+
 static void printPathPoints(int level,const ProtoSVGElementPath *path)
 {
     for(int i=0;i<path->points_size();i++)
@@ -105,6 +109,16 @@ int main (int argc, const char * argv[])
         return 1;
     }
     
+    struct stat sourceFileInfo, targetFileInfo;
+    
+    if(::stat(argv[1], &sourceFileInfo) == 0
+       && ::stat(argv[2], &targetFileInfo) == 0) {
+        if (sourceFileInfo.st_mtimespec.tv_sec == targetFileInfo.st_mtimespec.tv_sec) {
+//            std::cout << "Source file is not changed" << std::endl;
+            return 0;
+        }
+    }
+    
     dbg_log("Input file= %s\n",argv[1]);
     dbg_log("Output file= %s\n",argv[2]);
     
@@ -157,6 +171,11 @@ int main (int argc, const char * argv[])
             printf("Failed to save pb file\n");
             return 4;
         }
+        
+        utimbuf newTime;
+        newTime.actime = sourceFileInfo.st_atimespec.tv_sec;
+        newTime.modtime = sourceFileInfo.st_mtimespec.tv_sec;
+        utime(argv[2], &newTime);
     }else
     {
         printf("Failed to open output file %s\n",argv[2]);
