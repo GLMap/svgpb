@@ -49,10 +49,10 @@
 			fileType = pattern.proxy;
 			isEditable = 1;
 			outputFiles = (
-				"${INPUT_FILE_BASE}.pb.cc",
-				"${INPUT_FILE_BASE}.pb.h",
+				"${DERIVED_SOURCES_DIR}/${INPUT_FILE_BASE}.pb.cc",
+				"${DERIVED_SOURCES_DIR}/${INPUT_FILE_BASE}.pb.h",
 			);
-			script = "/usr/local/bin/protoc --proto_path=\"${INPUT_FILE_DIR}\" --cpp_out=\"${DERIVED_SOURCES_DIR}\" \"${INPUT_FILE_PATH}\"";
+			script = "/usr/local/bin/protoc --proto_path=\"${INPUT_FILE_DIR}\" --cpp_out=\"${DERIVED_SOURCES_DIR}\" \"${INPUT_FILE_PATH}\"\n";
 		};
 		C1D0667714D8221100802591 /* PBXBuildRule */ = {
 			isa = PBXBuildRule;
