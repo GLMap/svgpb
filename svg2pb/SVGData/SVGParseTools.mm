@@ -9,6 +9,8 @@
 #import "SVGParseTools.h"
 #import <map>
 #import <string>
+
+#include "Matrix3x3.h"
 using namespace std;
 
 
@@ -53,7 +55,7 @@ bool parseNumbers(const char *data,int expectedNumbersCount, double *result, con
     return true;
 }
 
-bool    parseMatrixString(ProtoAffineTransformMatrix *matrix, const char *data)
+bool parseMatrixString(ProtoAffineTransformMatrix *matrix, const char *data)
 {
     if(strncmp("matrix(", data, 7)==0)
     {
@@ -75,6 +77,21 @@ bool    parseMatrixString(ProtoAffineTransformMatrix *matrix, const char *data)
         {
             matrix->set_tx(vals[0]);
             matrix->set_ty(vals[1]);
+            return true;
+        }
+    }else if(strncmp("rotate(", data, 7)==0)
+    {
+        double vals[3];
+        if(parseNumbers(data+7, 3, vals, &data))
+        {
+            Matrix3x3 m = translateMatrix(vals[1], vals[2]) * rotateMatrix(vals[0]) * translateMatrix(-vals[1], -vals[2]);
+            
+            matrix->set_a (m.m[0][0]);
+            matrix->set_b (m.m[1][0]);
+            matrix->set_c (m.m[0][1]);
+            matrix->set_d (m.m[1][1]);
+            matrix->set_tx(m.m[0][2]);
+            matrix->set_ty(m.m[1][2]);
             return true;
         }
     }else

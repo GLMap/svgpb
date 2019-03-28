@@ -91,6 +91,7 @@
 		6C3FD3951F4D79AD007320EE /* main_bg.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = main_bg.svg; sourceTree = "<group>"; };
 		6C3FD3961F4D79AD007320EE /* test.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = test.svg; sourceTree = "<group>"; };
 		6C3FD3A01F4D827C007320EE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		6C558AA0224CC52E0095E602 /* Matrix3x3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Matrix3x3.h; sourceTree = "<group>"; };
 		6CA3DEEB1B5FA99D0017150C /* libprotobuf-lite.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libprotobuf-lite.a"; path = "/usr/local/lib/libprotobuf-lite.a"; sourceTree = "<absolute>"; };
 		C14D5593153D5C6B00E37F56 /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
 		C14D5594153D5C6B00E37F56 /* Logger.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Logger.mm; sourceTree = "<group>"; };
@@ -273,6 +274,7 @@
 				C1F72762141F6E8000CE8C94 /* SVGParseTools.mm */,
 				C1F72763141F6E8000CE8C94 /* SVGPath.h */,
 				C1F72764141F6E8000CE8C94 /* SVGPath.mm */,
+				6C558AA0224CC52E0095E602 /* Matrix3x3.h */,
 			);
 			path = SVGData;
 			sourceTree = "<group>";
@@ -330,6 +332,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				de,
 				es,
