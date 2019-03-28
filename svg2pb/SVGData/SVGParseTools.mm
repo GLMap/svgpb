@@ -16,7 +16,7 @@ using namespace std;
 std::vector<double> parseNumbers(const char *data, const char **lastChar)
 {
     std::vector<double> rv;
-    while(data[0])
+    while(*data)
     {
         char *nextNumber = nullptr;
         double nextVal = strtod(data, &nextNumber);
@@ -75,48 +75,100 @@ bool parseNumbers(const char *data,int expectedNumbersCount, double *result, con
 
 bool parseMatrixString(ProtoAffineTransformMatrix *matrix, const char *data)
 {
-    if(strncmp("matrix(", data, 7)==0)
+    Matrix3x3 r = identMatrix();
+    bool isError = false;
+    while(*data)
     {
-        double vals[6];
-        if(parseNumbers(data+7, 6, vals, &data))
+        Matrix3x3 m = identMatrix();
+        if(strncmp("matrix(", data, 7)==0)
         {
-            matrix->set_a (vals[0]);
-            matrix->set_b (vals[1]);
-            matrix->set_c (vals[2]);
-            matrix->set_d (vals[3]);
-            matrix->set_tx(vals[4]);
-            matrix->set_ty(vals[5]);
-            return true;
-        }
-    }else if(strncmp("translate(", data, 10)==0)
-    {
-        auto vals = parseNumbers(data+10, nullptr);
-        if(vals.size()==1 || vals.size() ==2)
+            double vals[6];
+            if(parseNumbers(data+7, 6, vals, &data))
+            {
+                m.m[0][0] = vals[0];
+                m.m[1][0] = vals[1];
+                m.m[0][1] = vals[2];
+                m.m[1][1] = vals[3];
+                m.m[0][2] = vals[4];
+                m.m[1][2] = vals[5];
+            }else
+            {
+                isError = true;
+                break;
+            }
+        }else if(strncmp("translate(", data, 10)==0)
         {
-            matrix->set_tx(vals[0]);
-            matrix->set_ty(vals.size()==2 ? vals[1] : 0);
-            return true;
-        }
-    }else if(strncmp("rotate(", data, 7)==0)
-    {
-        double vals[3];
-        if(parseNumbers(data+7, 3, vals, &data))
+            auto vals = parseNumbers(data+10, &data);
+            if(vals.size() == 1)
+            {
+                m.m[0][2] = vals[0];
+            }else if(vals.size() == 2)
+            {
+                m.m[0][2] = vals[0];
+                m.m[1][2] = vals[1];
+            }else
+            {
+                isError = true;
+                break;
+            }
+        }else if(strncmp("rotate(", data, 7)==0)
         {
-            Matrix3x3 m = translateMatrix(vals[1], vals[2]) * rotateMatrix(vals[0]) * translateMatrix(-vals[1], -vals[2]);
-            
-            matrix->set_a (m.m[0][0]);
-            matrix->set_b (m.m[1][0]);
-            matrix->set_c (m.m[0][1]);
-            matrix->set_d (m.m[1][1]);
-            matrix->set_tx(m.m[0][2]);
-            matrix->set_ty(m.m[1][2]);
-            return true;
+            auto vals = parseNumbers(data+7, &data);
+            if(vals.size()==1)
+            {
+                m = rotateMatrix(vals[0]);
+            }else if(vals.size() == 3)
+            {
+                m = translateMatrix(vals[1], vals[2]) * rotateMatrix(vals[0]) * translateMatrix(-vals[1], -vals[2]);
+            }else
+            {
+                isError = true;
+                break;
+            }
+        }else if(strncmp("scale(", data, 6)==0)
+        {
+            auto vals = parseNumbers(data+6, &data);
+            if(vals.size() == 1)
+            {
+                m.m[0][0] = vals[0];
+                m.m[1][1] = vals[0];
+            }else if(vals.size() == 2)
+            {
+                m.m[0][0] = vals[0];
+                m.m[1][1] = vals[1];
+            }else
+            {
+                isError = true;
+                break;
+            }
+        }else
+        {
+            isError = true;
+            break;
         }
-    }else
+
+        if(*data != ')')
+        {
+            isError = true;
+            break;
+        }
+        ++data;
+        if(*data == ' ')
+            ++data;
+        r = r * m;
+    }
+    if(isError)
     {
         dbgLog(@"Error loading svg: Transfrom not supported %s",data);
+        return false;
     }
-    return false;
+    matrix->set_a (r.m[0][0]);
+    matrix->set_b (r.m[1][0]);
+    matrix->set_c (r.m[0][1]);
+    matrix->set_d (r.m[1][1]);
+    matrix->set_tx(r.m[0][2]);
+    matrix->set_ty(r.m[1][2]);
+    return true;
 }
 
 void enumElements(TBXMLElement *element,EnumElementsBlock unknownElementBlock,...)
