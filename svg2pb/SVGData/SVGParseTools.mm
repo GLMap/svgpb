@@ -13,6 +13,24 @@
 #include "Matrix3x3.h"
 using namespace std;
 
+std::vector<double> parseNumbers(const char *data, const char **lastChar)
+{
+    std::vector<double> rv;
+    while(data[0])
+    {
+        char *nextNumber = nullptr;
+        double nextVal = strtod(data, &nextNumber);
+        if(nextNumber==data || nextNumber == nullptr) break;
+        rv.push_back(nextVal);
+        if(*nextNumber==',')
+            ++nextNumber;
+        data = nextNumber;
+    }
+    if(lastChar)
+        *lastChar = data;
+    return rv;
+}
+
 
 bool parseNumbersFromRow(const char *data, int count, double *result, const char **lastChar)
 {
@@ -72,11 +90,11 @@ bool parseMatrixString(ProtoAffineTransformMatrix *matrix, const char *data)
         }
     }else if(strncmp("translate(", data, 10)==0)
     {
-        double vals[2];
-        if(parseNumbers(data+10, 2, vals, &data))
+        auto vals = parseNumbers(data+10, nullptr);
+        if(vals.size()==1 || vals.size() ==2)
         {
             matrix->set_tx(vals[0]);
-            matrix->set_ty(vals[1]);
+            matrix->set_ty(vals.size()==2 ? vals[1] : 0);
             return true;
         }
     }else if(strncmp("rotate(", data, 7)==0)

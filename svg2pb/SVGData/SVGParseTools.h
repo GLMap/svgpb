@@ -15,6 +15,7 @@ typedef void(^EnumElementsBlock)(TBXMLElement *element);
 void enumAttributes(TBXMLElement *element,bool removeOnSuccess,EnumAttributesBlock unknownAttributeBlock,...);
 void enumElements(TBXMLElement *element,EnumElementsBlock unknownElementBlock,...);
 
+std::vector<double> parseNumbers(const char *data, const char **lastChar);
 bool parseNumbers(const char *data,int expectedNumbersCount, double *result, const char **lastChar);
 bool parseNumbersFromRow(const char *data, int count, double *result, const char **lastChar);
 bool parseMatrixString(ProtoAffineTransformMatrix *matrix, const char *data);

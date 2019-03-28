@@ -134,34 +134,40 @@ static bool parsePathString(ProtoSVGElementPath *path,const char *data)
             case 'C':
             {
                 ++data;
-                double vals[6];
-                if(!parseNumbers(data, 6, vals, &data))
+                auto vals = parseNumbers(data, &data);
+                if((vals.size() % 6) != 0)
                 {
-                    dbgLog(@"Error in SVG: expected 6 params: %s",data);
+                    dbgLog(@"Error in SVG: expected goups of 6 params: %s",data);
                     return NO;
                 }
-                if(!isAbsolute)
+                int count = vals.size() / 6;
+
+                for(int i = 0; i<count ; ++i)
                 {
-                    for (int i=0; i<3; i++) 
+                    int start = i * 6;
+                    if(!isAbsolute)
                     {
-                        vals[i*2]+=curX;
-                        vals[i*2+1]+=curY;
+                        for (int i=0; i<3; i++)
+                        {
+                            vals[start + i*2]+=curX;
+                            vals[start + i*2+1]+=curY;
+                        }
                     }
+                    curX = vals[start + 4];
+                    curY = vals[start + 5];
+
+                    ProtoSVGElementPath_PathPoint *point = path->add_points();
+                    point->mutable_curve_to()->set_cp1x(vals[start + 0]);
+                    point->mutable_curve_to()->set_cp1y(vals[start + 1]);
+                    point->mutable_curve_to()->set_cp2x(vals[start + 2]);
+                    point->mutable_curve_to()->set_cp2y(vals[start + 3]);
+                    point->mutable_curve_to()->set_x(curX);
+                    point->mutable_curve_to()->set_y(curY);
+
+                    prevCurveCDX = vals[start + 2]-curX;
+                    prevCurveCDY = vals[start + 3]-curY;
+                    prevCommandIsCurve = YES;
                 }
-                curX = vals[4];
-                curY = vals[5];
-                
-                ProtoSVGElementPath_PathPoint *point = path->add_points();
-                point->mutable_curve_to()->set_cp1x(vals[0]);
-                point->mutable_curve_to()->set_cp1y(vals[1]);
-                point->mutable_curve_to()->set_cp2x(vals[2]);
-                point->mutable_curve_to()->set_cp2y(vals[3]);
-                point->mutable_curve_to()->set_x(curX);
-                point->mutable_curve_to()->set_y(curY);                
-                
-                prevCurveCDX = vals[2]-curX;
-                prevCurveCDY = vals[3]-curY;
-                prevCommandIsCurve = YES;
                 break;
             }
             case 's':
