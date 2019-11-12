@@ -47,6 +47,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.proto";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			outputFiles = (
 				"${DERIVED_SOURCES_DIR}/${INPUT_FILE_BASE}.pb.cc",
@@ -59,23 +61,27 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.proto";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			outputFiles = (
-				"${INPUT_FILE_BASE}.pb.h",
-				"${INPUT_FILE_BASE}.pb.cc",
+				"$(DERIVED_FILES_DIR)/$(INPUT_FILE_BASE).pb.h",
+				"$(DERIVED_FILES_DIR)/$(INPUT_FILE_BASE).pb.cc",
 			);
-			script = "/usr/local/bin/protoc --proto_path=\"${INPUT_FILE_DIR}\" --cpp_out=\"${DERIVED_SOURCES_DIR}\" \"${INPUT_FILE_PATH}\"";
+			script = "echo $SRCROOT\n$SRCROOT/libs/build/macOS/x86_64/bin/protoc --proto_path=$INPUT_FILE_DIR $INPUT_FILE_PATH --cpp_out=$DERIVED_FILES_DIR\n";
 		};
 		C1D0668314D8226700802591 /* PBXBuildRule */ = {
 			isa = PBXBuildRule;
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.svg";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			outputFiles = (
 				"$(TARGET_BUILD_DIR)/$(WRAPPER_NAME)/$(INPUT_FILE_BASE).svgpb",
 			);
-			script = "/usr/local/bin/svg2pb \"$INPUT_FILE_PATH\" \"$TARGET_BUILD_DIR/$WRAPPER_NAME/$INPUT_FILE_BASE.svgpb\"";
+			script = "/usr/local/bin/svg2pb \"$INPUT_FILE_PATH\" \"$TARGET_BUILD_DIR/$WRAPPER_NAME/$INPUT_FILE_BASE.svgpb\"\n";
 		};
 /* End PBXBuildRule section */
 
@@ -305,6 +311,7 @@
 			buildConfigurationList = C1D0665C14D81FCA00802591 /* Build configuration list for PBXNativeTarget "SVGViewDemo" */;
 			buildPhases = (
 				C1D0664914D81FCA00802591 /* Resources */,
+				6C779B3B237AC451009C9003 /* ShellScript */,
 				C1D0664714D81FCA00802591 /* Sources */,
 				C1D0664814D81FCA00802591 /* Frameworks */,
 			);
@@ -370,6 +377,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		6C779B3B237AC451009C9003 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd libs && make\n";
+		};
 		C13535ED142A1A7100C211D2 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 8;
@@ -471,7 +495,6 @@
 		C1BB057213FBD3760063B1D1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -489,7 +512,6 @@
 		C1BB057313FBD3760063B1D1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_OPTIMIZATION_LEVEL = 1;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
@@ -506,9 +528,9 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SVGViewDemo/SVGViewDemo-Prefix.pch";
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/libs/build/$(arch)/include";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/libs/build/iOS/$(arch)/include";
 				INFOPLIST_FILE = "SVGViewDemo/SVGViewDemo-Info.plist";
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/libs/build/$(arch)/lib";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/libs/build/iOS/$(arch)/lib";
 				OTHER_LDFLAGS = "-lprotobuf-lite";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -524,9 +546,9 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SVGViewDemo/SVGViewDemo-Prefix.pch";
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/libs/build/$(arch)/include";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/libs/build/iOS/$(arch)/include";
 				INFOPLIST_FILE = "SVGViewDemo/SVGViewDemo-Info.plist";
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/libs/build/$(arch)/lib";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/libs/build/iOS/$(arch)/lib";
 				OTHER_LDFLAGS = "-lprotobuf-lite";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;

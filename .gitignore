@@ -1,4 +1,3 @@
-Pods
 project.xcworkspace
 *.pbxuser
 *.perspectivev3
@@ -8,4 +7,5 @@ xcuserdata
 .DS_Store
 *.pb.cc
 *.pb.h
-libs
+libs/build
+libs/download
