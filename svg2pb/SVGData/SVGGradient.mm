@@ -9,7 +9,7 @@
 #import "SVGGradient.h"
 #include "SVGGeneralParams.h"
 #include "SVGParseTools.h"
-
+#include "SVGParseColors.h"
 
 static bool parseStyleString(const char *str, ProtoSVGElementGradient_GradientStop *stop)
 {

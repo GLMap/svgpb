@@ -20,4 +20,3 @@ bool parseNumbers(const char *data,int expectedNumbersCount, double *result, con
 bool parseNumbersFromRow(const char *data, int count, double *result, const char **lastChar);
 bool parseMatrixString(ProtoAffineTransformMatrix *matrix, const char *data);
 bool parsePaintString(ProtoSVGPaint *paint, const char *val);
-bool parseColorString(ProtoColor    *color, const char *val);

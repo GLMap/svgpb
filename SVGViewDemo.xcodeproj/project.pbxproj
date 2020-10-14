@@ -15,7 +15,7 @@
 		6C3FD39C1F4D79AD007320EE /* main_bg.svg in Resources */ = {isa = PBXBuildFile; fileRef = 6C3FD3951F4D79AD007320EE /* main_bg.svg */; };
 		6C3FD39D1F4D79AD007320EE /* test.svg in Resources */ = {isa = PBXBuildFile; fileRef = 6C3FD3961F4D79AD007320EE /* test.svg */; };
 		6C3FD3A11F4D827C007320EE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C3FD3A01F4D827C007320EE /* UIKit.framework */; };
-		6CA3DEEC1B5FA99D0017150C /* libprotobuf-lite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CA3DEEB1B5FA99D0017150C /* libprotobuf-lite.a */; };
+		6CB6CA362536E6DD00468C84 /* SVGParseColors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6CB6CA342536E6DD00468C84 /* SVGParseColors.cpp */; };
 		C1497DF91F4DBB3B008F1176 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6C3FD38C1F4D7988007320EE /* Main.storyboard */; };
 		C14D5595153D5C6B00E37F56 /* Logger.mm in Sources */ = {isa = PBXBuildFile; fileRef = C14D5594153D5C6B00E37F56 /* Logger.mm */; };
 		C14D5596153D5C6B00E37F56 /* Logger.mm in Sources */ = {isa = PBXBuildFile; fileRef = C14D5594153D5C6B00E37F56 /* Logger.mm */; };
@@ -99,6 +99,10 @@
 		6C3FD3A01F4D827C007320EE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		6C558AA0224CC52E0095E602 /* Matrix3x3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Matrix3x3.h; sourceTree = "<group>"; };
 		6CA3DEEB1B5FA99D0017150C /* libprotobuf-lite.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libprotobuf-lite.a"; path = "/usr/local/lib/libprotobuf-lite.a"; sourceTree = "<absolute>"; };
+		6CB6CA332536E6C000468C84 /* ConstContainers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConstContainers.h; sourceTree = "<group>"; };
+		6CB6CA342536E6DD00468C84 /* SVGParseColors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SVGParseColors.cpp; sourceTree = "<group>"; };
+		6CB6CA352536E6DD00468C84 /* SVGParseColors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SVGParseColors.h; sourceTree = "<group>"; };
+		6CB6CA392536E74100468C84 /* FastHash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FastHash.h; sourceTree = "<group>"; };
 		C14D5593153D5C6B00E37F56 /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
 		C14D5594153D5C6B00E37F56 /* Logger.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Logger.mm; sourceTree = "<group>"; };
 		C14D55BA153D608E00E37F56 /* PBFileStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PBFileStream.cpp; sourceTree = "<group>"; };
@@ -141,7 +145,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6CA3DEEC1B5FA99D0017150C /* libprotobuf-lite.a in Frameworks */,
 				C1AFE63F141F6C6E0092FF0C /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -270,6 +273,10 @@
 		C1F72758141F6E8000CE8C94 /* SVGData */ = {
 			isa = PBXGroup;
 			children = (
+				6CB6CA332536E6C000468C84 /* ConstContainers.h */,
+				6CB6CA392536E74100468C84 /* FastHash.h */,
+				6CB6CA342536E6DD00468C84 /* SVGParseColors.cpp */,
+				6CB6CA352536E6DD00468C84 /* SVGParseColors.h */,
 				C1F7275B141F6E8000CE8C94 /* SVGRoot.h */,
 				C1F7275C141F6E8000CE8C94 /* SVGRoot.mm */,
 				C1F72759141F6E8000CE8C94 /* SVGGeneralParams.h */,
@@ -417,6 +424,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1AFE5F8141F62F90092FF0C /* svg.proto in Sources */,
+				6CB6CA362536E6DD00468C84 /* SVGParseColors.cpp in Sources */,
 				C1AFE5DE141F61760092FF0C /* main.mm in Sources */,
 				C1F72765141F6E8000CE8C94 /* SVGGeneralParams.mm in Sources */,
 				C1F72766141F6E8000CE8C94 /* SVGRoot.mm in Sources */,
@@ -451,8 +459,7 @@
 		C1AFE5E2141F61770092FF0C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "svg2pb/svg2pb-Prefix.pch";
@@ -463,7 +470,7 @@
 					"$(inherited)",
 					/usr/local/lib,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				OTHER_LDFLAGS = "-lprotobuf-lite";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -472,8 +479,7 @@
 		C1AFE5E3141F61770092FF0C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				COPY_PHASE_STRIP = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
@@ -486,7 +492,7 @@
 					"$(inherited)",
 					/usr/local/lib,
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				OTHER_LDFLAGS = "-lprotobuf-lite";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};

@@ -11,7 +11,7 @@
 #import <string>
 
 #include "Matrix3x3.h"
-using namespace std;
+#include "SVGParseColors.h"
 
 std::vector<double> parseNumbers(const char *data, const char **lastChar)
 {
@@ -173,7 +173,7 @@ bool parseMatrixString(ProtoAffineTransformMatrix *matrix, const char *data)
 
 void enumElements(TBXMLElement *element,EnumElementsBlock unknownElementBlock,...)
 {
-    map<string,EnumElementsBlock> searchMap;
+    std::map<std::string,EnumElementsBlock> searchMap;
     {
         va_list vl;
         va_start(vl,unknownElementBlock);
@@ -187,7 +187,7 @@ void enumElements(TBXMLElement *element,EnumElementsBlock unknownElementBlock,..
             if (!attribBlock)
                 break;
             
-            searchMap.insert(std::pair<string, EnumElementsBlock>(nextName,attribBlock));
+            searchMap.insert(std::pair<std::string, EnumElementsBlock>(nextName,attribBlock));
         }
         va_end(vl);
     }        
@@ -195,7 +195,7 @@ void enumElements(TBXMLElement *element,EnumElementsBlock unknownElementBlock,..
     while (element) 
     {
         EnumElementsBlock block = nil;
-        map<string, EnumElementsBlock>::iterator it = searchMap.find(element->name);
+        std::map<std::string, EnumElementsBlock>::iterator it = searchMap.find(element->name);
         if(it!=searchMap.end())
         {
             block = it->second;
@@ -214,7 +214,7 @@ void enumElements(TBXMLElement *element,EnumElementsBlock unknownElementBlock,..
 
 void enumAttributes(TBXMLElement *element,bool removeOnSuccess,EnumAttributesBlock unknownAttributeBlock,...)
 {
-    map<string,EnumAttributesBlock> attribMap;
+    std::map<std::string,EnumAttributesBlock> attribMap;
     {
         va_list vl;
         va_start(vl,unknownAttributeBlock);
@@ -228,7 +228,7 @@ void enumAttributes(TBXMLElement *element,bool removeOnSuccess,EnumAttributesBlo
             if (!attribBlock)
                 break;
             
-            attribMap.insert(std::pair<string, EnumAttributesBlock>(nextName,attribBlock));
+            attribMap.insert(std::pair<std::string, EnumAttributesBlock>(nextName,attribBlock));
         }            
         va_end(vl);
     }
@@ -238,7 +238,7 @@ void enumAttributes(TBXMLElement *element,bool removeOnSuccess,EnumAttributesBlo
     while (attribure) 
     {
         EnumAttributesBlock block = nil;
-        map<string, EnumAttributesBlock>::iterator it = attribMap.find(attribure->name);
+        std::map<std::string, EnumAttributesBlock>::iterator it = attribMap.find(attribure->name);
         if(it!=attribMap.end())
         {
             block = it->second;
@@ -271,30 +271,6 @@ void enumAttributes(TBXMLElement *element,bool removeOnSuccess,EnumAttributesBlo
     }
 }
 
-bool parseColorString(ProtoColor *color, const char *val)
-{
-    int len = strlen(val);
-    if(*val=='#' && len==7)
-    {
-        long l = strtol(val+1, nil, 16);
-        unsigned char *bgr = (unsigned char *)&l;
-        color->set_r(bgr[2]);
-        color->set_g(bgr[1]);
-        color->set_b(bgr[0]);
-        return true;
-    }else if(*val=='#' && len==4)
-    {
-        long l = strtol(val+1, nil, 16);
-        color->set_r(( (l >> 8) & 0xf ) * 0x11);
-        color->set_g(( (l >> 4) & 0xf ) * 0x11);
-        color->set_b(( l & 0xf ) * 0x11);
-        return true;
-    }
-    return false;
-}
-
-
-
 bool parsePaintString(ProtoSVGPaint *paint, const char *val)
 {
     int len = strlen(val);
@@ -320,5 +296,3 @@ bool parsePaintString(ProtoSVGPaint *paint, const char *val)
     dbgLog(@"Error in svg: Invalid paint %s",val);
     return false;
 }    
-
-
