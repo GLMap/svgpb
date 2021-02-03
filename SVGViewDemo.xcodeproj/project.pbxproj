@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -54,7 +54,8 @@
 				"${DERIVED_SOURCES_DIR}/${INPUT_FILE_BASE}.pb.cc",
 				"${DERIVED_SOURCES_DIR}/${INPUT_FILE_BASE}.pb.h",
 			);
-			script = "/usr/local/bin/protoc --proto_path=\"${INPUT_FILE_DIR}\" --cpp_out=\"${DERIVED_SOURCES_DIR}\" \"${INPUT_FILE_PATH}\"\n";
+			runOncePerArchitecture = 0;
+			script = "SYS_ARCH=`uname -m`\n\n../libs/build/macOS/${SYS_ARCH}/bin/protoc --proto_path=\"${INPUT_FILE_DIR}\" --cpp_out=\"${DERIVED_SOURCES_DIR}\" \"${INPUT_FILE_PATH}\"\n";
 		};
 		C1D0667714D8221100802591 /* PBXBuildRule */ = {
 			isa = PBXBuildRule;
@@ -98,7 +99,6 @@
 		6C3FD3961F4D79AD007320EE /* test.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = test.svg; sourceTree = "<group>"; };
 		6C3FD3A01F4D827C007320EE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		6C558AA0224CC52E0095E602 /* Matrix3x3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Matrix3x3.h; sourceTree = "<group>"; };
-		6CA3DEEB1B5FA99D0017150C /* libprotobuf-lite.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libprotobuf-lite.a"; path = "/usr/local/lib/libprotobuf-lite.a"; sourceTree = "<absolute>"; };
 		6CB6CA332536E6C000468C84 /* ConstContainers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConstContainers.h; sourceTree = "<group>"; };
 		6CB6CA342536E6DD00468C84 /* SVGParseColors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SVGParseColors.cpp; sourceTree = "<group>"; };
 		6CB6CA352536E6DD00468C84 /* SVGParseColors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SVGParseColors.h; sourceTree = "<group>"; };
@@ -246,7 +246,6 @@
 			isa = PBXGroup;
 			children = (
 				6C3FD3A01F4D827C007320EE /* UIKit.framework */,
-				6CA3DEEB1B5FA99D0017150C /* libprotobuf-lite.a */,
 				C153333813FBDAC5000CECC0 /* CoreGraphics.framework */,
 				C153333513FBDAAC000CECC0 /* QuartzCore.framework */,
 				C1BB056413FBD3760063B1D1 /* Foundation.framework */,
@@ -414,7 +413,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/bash;
-			shellScript = "osascript -e \"do shell script \\\"cp $TARGET_BUILD_DIR/$EXECUTABLE_NAME $INSTALL_PATH/$EXECUTABLE_NAME\\\" with administrator privileges\"\n\n";
+			shellScript = "osascript -e \"do shell script \\\"cp $TARGET_BUILD_DIR/$EXECUTABLE_NAME $INSTALL_PATH/$EXECUTABLE_NAME && codesign -s - $INSTALL_PATH/$EXECUTABLE_NAME\\\" with administrator privileges\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -464,11 +463,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "svg2pb/svg2pb-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				HEADER_SEARCH_PATHS = /usr/local/include;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../libs/build/macOS/$(CURRENT_ARCH)/include";
 				INSTALL_PATH = /usr/local/bin/;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/usr/local/lib,
+					"$(SRCROOT)/../libs/build/macOS/$(CURRENT_ARCH)/lib",
 				);
 				OTHER_LDFLAGS = "-lprotobuf-lite";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -486,11 +485,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "svg2pb/svg2pb-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				HEADER_SEARCH_PATHS = /usr/local/include;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../libs/build/macOS/$(CURRENT_ARCH)/include";
 				INSTALL_PATH = /usr/local/bin/;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/usr/local/lib,
+					"$(SRCROOT)/../libs/build/macOS/$(CURRENT_ARCH)/lib",
 				);
 				OTHER_LDFLAGS = "-lprotobuf-lite";
 				PRODUCT_NAME = "$(TARGET_NAME)";
